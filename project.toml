@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eari_package"
+version = "0.1.0"
+description = "CEARI and MEARI image demosaicking implementation"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=2.4.4",
+    "opencv-python>=4.13.0.92",
+    "scipy>=1.17.1"
+]

@@ -1,15 +1,13 @@
-# Polarimetric image demosaicking
+# pyeari - Polarimetric color demosaicking
 
-A Python package providing a Python implementation of the EARI (Edge-Aware Residual Interpolation) polarimetric demosaicking algorithm. This package implements two specific methods, MEARI, for Monochrome-Polarization Filter Array  and CEARI, for Color-Polarization Filter Array. A method for the standard color demosaciking residual interpolation, ri, is also provided.
+A package providing a Python implementation of the EARI (Edge-Aware Residual Interpolation) polarimetric demosaicking algorithm. This package implements two specific methods, MEARI, for Monochrome-Polarization Filter Array  and CEARI, for Color-Polarization Filter Array. A method for the standard color demosaciking residual interpolation, ri, is also provided.
 
 These algorithms are based on the work proposed by Morimatsu et al.. 
 > M. Morimatsu, Y. Monno, M. Tanaka, and M. Okutomi, "Monochrome And Color Polarization Demosaicking Using Edge-Aware Residual Interpolation," *2020 IEEE International Conference on Image Processing (ICIP)*, 2020. DOI: [10.1109/ICIP40778.2020.9191085](https://doi.org/10.1109/ICIP40778.2020.9191085)
 
-You can view the package on [PyPI](https://pypi.org/project/eari-demosaic/).
-
 ## Installation
 
-You can install the package directly from PyPI:
+You can install the package directly from [PyPI](https://pypi.org/project/eari-demosaic/):
 
 ```bash
 pip install eari-demosaic
@@ -81,7 +79,7 @@ The `CEARI` function takes a raw CPFA image and a Bayer pattern string. It stand
 
 ```python
 import cv2
-from eari import CEARI
+from pyeari import CEARI
 
 # Load your raw Color Polarization Filter Array image
 raw_cpfa = cv2.imread("path_to_raw_image.tif", cv2.IMREAD_UNCHANGED)
@@ -99,7 +97,7 @@ cv2.imwrite("output_90.png", RGB90 * 255)
 If you are working with monochrome polarization data, use `MEARI`. It takes an MPFA image and returns the four directional intensity images.
 
 ```python
-from eari import MEARI
+from pyeari import MEARI
 
 # Process the monochrome array
 I90, I00, I45, I135 = MEARI(raw_mpfa)
@@ -111,7 +109,7 @@ I90, I00, I45, I135 = MEARI(raw_mpfa)
 To perform standard residual interpolation on a normal Color Filter Array, you can use the `ri` function.
 
 ```python
-from eari import ri, make_cfa
+from pyeari import ri, make_cfa
 
 # Generate a simulated CFA from a ground-truth image for testing
 cfa_image = make_cfa("test_image.png", "RGGB")

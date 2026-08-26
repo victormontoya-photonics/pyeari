@@ -1,0 +1,76 @@
+# Custom Image Demosaicking (MEARI & CEARI)
+
+A Python package providing custom-built algorithms for advanced image demosaicking. This package introduces two specific methods, MEARI and CEARI, designed to reconstruct high-quality full-color and polarization images from raw filter array data using guided filtering and residual interpolation.
+
+## Installation
+
+You can install the package directly from PyPI:
+
+```bash
+pip install meari_package
+```
+
+## Dependencies
+This package requires the following libraries:
+* `numpy`
+* `scipy`
+* `opencv-python` (cv2)
+
+## Available Functions
+
+The package exposes the following main functions:
+* **`CEARI(CPFA, pattern)`**: A custom demosaicking function for a Color Polarization Filter Array (CPFA).
+* **`MEARI(MPFA)`**: A custom demosaicking function for a Monochrome Polarization Filter Array (MPFA).
+* **`ri(cfa, pattern)`**: Standard color demosaicking using Residual Interpolation.
+* **`make_cfa(img_path, pattern)`**: A utility function to generate a simulated Color Filter Array (CFA) from a standard image file.
+
+### Supported Bayer Patterns
+Functions requiring a `pattern` argument accept the following standard Bayer array strings:
+* `'RGGB'`
+* `'BGGR'`
+* `'GRBG'`
+* `'GBRG'`
+
+---
+
+## Usage Examples
+
+### 1. Color Polarization Demosaicking (CEARI)
+The `CEARI` function takes a raw CPFA image and a Bayer pattern string. It standardizes the input automatically and returns four separate RGB images corresponding to the 90°, 0°, 45°, and 135° polarization angles.
+
+```python
+import cv2
+from meari_package import CEARI
+
+# Load your raw Color Polarization Filter Array image
+raw_cpfa = cv2.imread("path_to_raw_image.tif", cv2.IMREAD_UNCHANGED)
+
+# Process the image (assuming an RGGB pattern)
+RGB90, RGB00, RGB45, RGB135 = CEARI(raw_cpfa, 'RGGB')
+
+# Save or display the resulting images
+cv2.imwrite("output_90.png", RGB90 * 255)
+```
+
+### 2. Monochrome Polarization Demosaicking (MEARI)
+If you are working with monochrome polarization data, use `MEARI`. It takes an MPFA image and returns the four directional intensity images.
+
+```python
+from meari_package import MEARI
+
+# Process the monochrome array
+I90, I00, I45, I135 = MEARI(raw_mpfa)
+```
+
+### 3. Standard Color Demosaicking (RI)
+To perform standard residual interpolation on a normal Color Filter Array, you can use the `ri` function.
+
+```python
+from meari_package import ri, make_cfa
+
+# Generate a simulated CFA from a ground-truth image for testing
+cfa_image = make_cfa("test_image.png", "RGGB")
+
+# Reconstruct the full RGB image
+demosaicked_rgb = ri(cfa_image, "RGGB")
+```

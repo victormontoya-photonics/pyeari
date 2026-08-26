@@ -1,7 +1,9 @@
-```markdown
-# Custom Image Demosaicking (MEARI & CEARI)
+# Polarimetric image demosaicking
 
-A Python package providing custom-built algorithms for advanced image demosaicking. This package introduces two specific methods, MEARI and CEARI, designed to reconstruct high-quality full-color and polarization images from raw filter array data using guided filtering and residual interpolation. 
+A Python package providing a Python implementation of the EARI (Edge-Aware Residual Interpolation) polarimetric demosaicking algorithm. This package implements two specific methods, MEARI, for Monochrome-Polarization Filter Array  and CEARI, for Color-Polarization Filter Array. A method for the standard color demosaciking residual interpolation, ri, is also provided.
+
+These algorithms are based on the work proposed by Morimatsu et al.. 
+> M. Morimatsu, Y. Monno, M. Tanaka, and M. Okutomi, "Monochrome And Color Polarization Demosaicking Using Edge-Aware Residual Interpolation," *2020 IEEE International Conference on Image Processing (ICIP)*, 2020. DOI: [10.1109/ICIP40778.2020.9191085](https://doi.org/10.1109/ICIP40778.2020.9191085)
 
 You can view the package on [PyPI](https://pypi.org/project/eari-demosaic/).
 
@@ -31,8 +33,8 @@ This package requires the following libraries:
 
 The package exposes the following main functions:
 
-* **`CEARI(CPFA, pattern)`**: A custom demosaicking function for a Color Polarization Filter Array (CPFA).
-* **`MEARI(MPFA)`**: A custom demosaicking function for a Monochrome Polarization Filter Array (MPFA).
+* **`CEARI(CPFA, pattern)`**: A demosaicking function for a Color Polarization Filter Array (CPFA).
+* **`MEARI(MPFA)`**: A demosaicking function for a Monochrome Polarization Filter Array (MPFA).
 * **`ri(cfa, pattern)`**: Standard color demosaicking using Residual Interpolation.
 * **`make_cfa(img_path, pattern)`**: A utility function to generate a simulated Color Filter Array (CFA) from a standard image file.
 
@@ -46,28 +48,28 @@ Functions requiring a `pattern` argument accept the following standard Bayer arr
 * `'GBRG'`
 
 **Supported Polarization Pattern:**
-Currently, the algorithms support only one polarization arrangement—the standard 2x2 macro-pixel. When combined with a color filter array, it forms a Color Polarization Filter Array (CPFA).
+Currently, the algorithms support only one polarization arrangement—the standard 2x2 macro-pixel, multiple color arrengements are supported. When combined with a color filter array, it forms a Color Polarization Filter Array (CPFA).
 
-Here is an example of the supported CPFA layout (showing a **BGGR** color pattern):
+Here is an example of supported CPFA layouts (showing a **RGGB** and **BGGR**color pattern):
 
 ```text
-+-------+-------+-------+-------+
-|  90°  |  45°  |  90°  |  45°  |
-|   B   |   B   |   G   |   G   |
-+-------+-------+-------+-------+
-| 135°  |   0°  | 135°  |   0°  |
-|   B   |   B   |   G   |   G   |
-+-------+-------+-------+-------+
-|  90°  |  45°  |  90°  |  45°  |
-|   G   |   G   |   R   |   R   |
-+-------+-------+-------+-------+
-| 135°  |   0°  | 135°  |   0°  |
-|   G   |   G   |   R   |   R   |
-+-------+-------+-------+-------+
-
+RGGB Pattern                             BGGR Pattern
++-------+-------+-------+-------+      +-------+-------+-------+-------+
+|  90°  |  45°  |  90°  |  45°  |      |  90°  |  45°  |  90°  |  45°  |
+|   R   |   R   |   G   |   G   |      |   B   |   B   |   G   |   G   |
++-------+-------+-------+-------+      +-------+-------+-------+-------+
+| 135°  |   0°  | 135°  |   0°  |      | 135°  |   0°  | 135°  |   0°  |
+|   R   |   R   |   G   |   G   |      |   B   |   B   |   G   |   G   |
++-------+-------+-------+-------+      +-------+-------+-------+-------+
+|  90°  |  45°  |  90°  |  45°  |      |  90°  |  45°  |  90°  |  45°  |
+|   G   |   G   |   B   |   B   |      |   G   |   G   |   R   |   R   |
++-------+-------+-------+-------+      +-------+-------+-------+-------+
+| 135°  |   0°  | 135°  |   0°  |      | 135°  |   0°  | 135°  |   0°  |
+|   G   |   G   |   B   |   B   |      |   G   |   G   |   R   |   R   |
++-------+-------+-------+-------+      +-------+-------+-------+-------+
 ```
 
-This specific polarimetric arrangement is the industry standard and is used by the most common polarimetric cameras on the market, such as those based on the **Sony IMX250MYR** (color) and **Sony IMX250MZR** (monochrome) sensors.
+This specific **RGGB** polarimetric arrangement is the industry standard and is used by the most common polarimetric cameras on the market, such as those based on the **Sony IMX250MYR** (color) and **Sony IMX250MZR** (monochrome) sensors.
 
 ---
 
@@ -116,9 +118,5 @@ cfa_image = make_cfa("test_image.png", "RGGB")
 
 # Reconstruct the full RGB image
 demosaicked_rgb = ri(cfa_image, "RGGB")
-
-```
-
-```
 
 ```

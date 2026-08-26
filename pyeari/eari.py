@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-from ri import guidedfilter, bilinear_RB, ri,standardize_input
+from .ri import guidedfilter, bilinear_RB, ri,standardize_input
 def MEARI(MPFA):
     eps=1e-32
     Fn=np.array([[1,2,1],[1,2,1],[0,0,0]], dtype=np.float32)/8

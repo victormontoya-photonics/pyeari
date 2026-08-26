@@ -7,7 +7,7 @@ A Python package providing custom-built algorithms for advanced image demosaicki
 You can install the package directly from PyPI:
 
 ```bash
-pip install meari_package
+pip install eari_package
 ```
 
 ## Dependencies
@@ -40,7 +40,7 @@ The `CEARI` function takes a raw CPFA image and a Bayer pattern string. It stand
 
 ```python
 import cv2
-from meari_package import CEARI
+from eari_package import CEARI
 
 # Load your raw Color Polarization Filter Array image
 raw_cpfa = cv2.imread("path_to_raw_image.tif", cv2.IMREAD_UNCHANGED)
@@ -56,7 +56,7 @@ cv2.imwrite("output_90.png", RGB90 * 255)
 If you are working with monochrome polarization data, use `MEARI`. It takes an MPFA image and returns the four directional intensity images.
 
 ```python
-from meari_package import MEARI
+from eari_package import MEARI
 
 # Process the monochrome array
 I90, I00, I45, I135 = MEARI(raw_mpfa)
@@ -66,7 +66,7 @@ I90, I00, I45, I135 = MEARI(raw_mpfa)
 To perform standard residual interpolation on a normal Color Filter Array, you can use the `ri` function.
 
 ```python
-from meari_package import ri, make_cfa
+from eari_package import ri, make_cfa
 
 # Generate a simulated CFA from a ground-truth image for testing
 cfa_image = make_cfa("test_image.png", "RGGB")
